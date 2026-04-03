@@ -2,7 +2,7 @@
 
 pkgname=ch341prog-git
 _gitname=ch341prog
-pkgver=r29.379ef13
+pkgver=r75.95a82e4
 pkgrel=1
 pkgdesc="A simple command line tool (programmer) interfacing with ch341a"
 arch=('i686' 'x86_64')
@@ -18,21 +18,30 @@ pkgver() {
 
   # Get the version number
   ( set -o pipefail
-    git describe --long 2>/dev/null | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
+  git describe --long 2>/dev/null | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
     printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
   )
 }
 
 build() {
-  cd "${srcdir}/${_gitname}"
-  make
+#  cd "${srcdir}/${_gitname}"
+  local cmake_options=(
+    -B build
+    -S $_gitname
+    -W no-dev
+    -D CMAKE_BUILD_TYPE=None
+    -D CMAKE_INSTALL_PREFIX=/usr
+  )
+  cmake "${cmake_options[@]}"
+  cmake --build build
 }
 
 package() {
-  cd "${srcdir}/${_gitname}"
+ # cd "${srcdir}/${_gitname}"
 
   # Install the program
-  install -Dm755 ch341prog "${pkgdir}/usr/bin/ch341prog"
+  #install -Dm755 ch341prog "${pkgdir}/usr/bin/ch341prog"
+  DESTDIR="$pkgdir" cmake --install build
 }
 
 # vim:set ft=sh ts=2 sw=2 et:
