@@ -9,7 +9,7 @@ arch=('i686' 'x86_64')
 url="https://github.com/setarcos/ch341prog.git"
 license=('GPL')
 depends=('libusb>=1')
-makedepends=('git')
+makedepends=('git' 'cmake')
 source=("${_gitname}::git+https://github.com/setarcos/ch341prog.git")
 md5sums=('SKIP')
 
