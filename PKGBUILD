@@ -2,7 +2,7 @@
 
 pkgname=ch341prog-git
 _gitname=ch341prog
-pkgver=r75.95a82e4
+pkgver=r80.d79bab2
 pkgrel=1
 pkgdesc="A simple command line tool (programmer) interfacing with ch341a"
 arch=('i686' 'x86_64')
